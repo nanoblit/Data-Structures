@@ -1,3 +1,10 @@
+from doubly_linked_list import DoublyLinkedList
+
+class Node:
+    def __init__(self, key, value):
+        self.key = key
+        self.value = value
+        
 class LRUCache:
     """
     Our LRUCache class keeps track of the max number of nodes it
@@ -7,7 +14,10 @@ class LRUCache:
     to every node stored in the cache.
     """
     def __init__(self, limit=10):
-        pass
+        self.dll = DoublyLinkedList()
+        self.storage = {}
+        self.limit = limit
+        self.length = 0
 
     """
     Retrieves the value associated with the given key. Also
@@ -17,7 +27,23 @@ class LRUCache:
     key-value pair doesn't exist in the cache.
     """
     def get(self, key):
-        pass
+        # Try getting the value from the dll
+        element = None
+        node = self.dll.head
+        for i in range(self.length - 1):
+            if node.value.key == key:
+                element = node
+                break
+            node = node.next
+            
+        # If found
+        if element:
+            # Move element to the end
+            self.dll.move_to_end(element)
+            # Return it
+            return element.value.value
+        # Return None
+        return None
 
     """
     Adds the given key-value pair to the cache. The newly-
@@ -30,4 +56,29 @@ class LRUCache:
     the newly-specified value.
     """
     def set(self, key, value):
+        # Try finding the key in the dll
+        found = None
+        node = self.dll.head
+        for i in range(self.length - 1):
+            if node.value.key == key:
+                found = node
+                break
+            node = node.next
+        # If found
+        if found:
+            # Set its value to value
+            found.value.value = value
+            # Move it to the end
+            self.dll.move_to_end(found)
+        # Else
+        else:
+            # If length == limit
+            if self.length == self.limit:
+                # Remove the oldest (firs entry)
+                self.dll.delete(self.dll.head)
+            # Add entry at the end
+            self.dll.add_to_tail(Node(key, value))
+            # Length++
+            self.length += 1
+                
         pass
