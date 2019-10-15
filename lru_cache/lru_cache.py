@@ -80,5 +80,3 @@ class LRUCache:
             self.dll.add_to_tail(Node(key, value))
             # Length++
             self.length += 1
-                
-        pass
