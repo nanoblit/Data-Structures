@@ -28,20 +28,20 @@ class LRUCache:
     """
     def get(self, key):
         # Try getting the value from the dll
-        element = None
+        found = None
         node = self.dll.head
         for i in range(self.length - 1):
             if node.value.key == key:
-                element = node
+                found = node
                 break
             node = node.next
             
         # If found
-        if element:
+        if found:
             # Move element to the end
-            self.dll.move_to_end(element)
+            self.dll.move_to_end(found)
             # Return it
-            return element.value.value
+            return found.value.value
         # Return None
         return None
 
