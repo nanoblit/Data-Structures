@@ -69,17 +69,56 @@ class BinarySearchTree:
     # Print all the values in order from low to high
     # Hint:  Use a recursive, depth first traversal
     def in_order_print(self, node):
-        pass
+        values = []
+        append_to_values = lambda value : values.append(value)
+        self.for_each(append_to_values)
+        values.sort()
+        for value in values:
+            print(str(value))
 
     # Print the value of every node, starting with the given node,
     # in an iterative breadth first traversal
     def bft_print(self, node):
-        pass
+        # use a queue data structure
+        queue = Queue()
+        # push the starting node on to the queue
+        queue.enqueue(node)
+        # loop while the queue has data
+        while queue.len() > 0:
+            # dequeue the current it em off the queue
+            current = queue.dequeue()
+            # print the current value
+            print(str(current.value))
+            # if the current node has a left child
+            if current.left:
+                # enqueue the left child on to the queue
+                queue.enqueue(current.left)
+            # if the current node has a right child
+            if current.right:
+                # enqueue right child on to the queue 
+                queue.enqueue(current.right)
 
     # Print the value of every node, starting with the given node,
     # in an iterative depth first traversal
     def dft_print(self, node):
-        pass
+        # use a stack data structure
+        stack = Stack()
+        # push the starting node on to the stack
+        stack.push(node)
+        # loop while the stack has data
+        while stack.len() > 0:
+            # pop the current it em off the stack
+            current = stack.pop()
+            # print the current value
+            print(str(current.value))
+            # if the current node has a left child
+            if current.left:
+                # push the left child on to the stack
+                stack.push(current.left)
+            # if the current node has a right child
+            if current.right:
+                # push right child on to the stack          
+                stack.push(current.right)
 
     # STRETCH Goals -------------------------
     # Note: Research may be required
